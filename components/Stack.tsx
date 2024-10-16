@@ -24,13 +24,13 @@ const Stack: React.FC<StackProps> = ({
     flexDirection: direction,
     alignItems,
     justifyContent,
-    margin: -spacing / 2,
+    gap: spacing *8,
   };
 
   const childrenWithSpacing = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       return React.cloneElement(child, {
-        style: [child.props.style, { margin: spacing / 2 }],
+        style: [child.props.style],
       });
     }
     return child;

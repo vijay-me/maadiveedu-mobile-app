@@ -14,6 +14,9 @@ export default {
   yellow:'#FFA620',
   white:'#fff',
   black:'#000',
+  info:'#009956',
+  success:'#009956',
+  // warning:'#FFA620',
   'primary-gradient': 'linear-gradient(93.5deg, #004D2B 0%, #009956 100%)', // Added gradient color
   'badge-gradient': 'linear-gradient(180deg, #4A00E0 0%, #8E2DE2 100%)', // Added gradient color
   light: {

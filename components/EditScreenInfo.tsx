@@ -7,13 +7,21 @@ import { Text, View } from "./Themed";
 
 import Colors from "@/constants/Colors";
 import Button from "./Button";
-import {Dialog} from "./Dialog";
+import { Dialog } from "./Dialog";
 import Paper from "./Paper";
+import CheckBox from "./CheckBox";
+import RadioGroup from "./RadioGroup";
+import Stack from "./Stack";
+import Chip from "./Chip";
+import Select from "./Select";
+import Stepper from "./Stepper"; // Add this line to import the Stopper component
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  let checked = false;
+
   return (
-    <View>
-      <View style={styles.getStartedContainer}>
+    <View style={{padding:16}}>
+      {/* <View style={styles.getStartedContainer}>
         <Text
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
@@ -38,41 +46,77 @@ export default function EditScreenInfo({ path }: { path: string }) {
           Change any of the text, save the file, and your app will automatically
           update.
         </Text>
-      </View>
-      <View style={{flexDirection:'row',gap:8}}>
+      </View> */}
+      <View style={{ flexDirection: "row", gap: 8 }}>
         <Button
           title={"Text"}
           variant="text"
-          onPress={()=>console.log("Button pressed")}
+          onPress={() => console.log("Button pressed")}
         ></Button>
         <Button
           title={"Contained"}
-          variant='contained'
-          onPress={()=>console.log("Button pressed")}
+          variant="contained"
+          onPress={() => console.log("Button pressed")}
         ></Button>
         <Button
           title="Outlined"
-          variant='outlined'
-          onPress={()=>console.log("Button pressed")}
+          variant="outlined"
+          onPress={() => console.log("Button pressed")}
         ></Button>
       </View>
-      <Dialog open={true}  onClose={()=>{
-        console.log("Dialog closed")
-      } }>
+      <Dialog
+        open={false}
+        onClose={() => {
+          console.log("Dialog closed");
+        }}
+      >
         <Text>Dialog</Text>
       </Dialog>
+
+      <CheckBox
+        label="Check me"
+        checked={checked}
+        onChange={(e) => console.log(e)}
+      ></CheckBox>
+
+      <Select
+        options={[
+          { label: "Select", value: "select" },
+          { label: "Option", value: "option" },
+          { label: "Dropdown", value: "dropdown" },
+        ]}
+        value={"option"}
+        onChange={function (value: string): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
+
+      <RadioGroup
+        options={[{ label: "Radio", value: "radio" }]}
+        value={"radio"}
+        onChange={function (value: string): void {
+          throw new Error("Function not implemented.");
+        }}
+      ></RadioGroup>
+      <Stack direction="row" spacing={1}>
+        <Text>Hello</Text>
+        <Text>World</Text>
+      </Stack>
+
+      <Chip label={"Chip"}></Chip>
+
       <View style={styles.helpContainer}>
-        <ExternalLink
-          style={styles.helpLink}
-          href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
-        >
         <Paper>
           <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
             Tap here if your app doesn't automatically update after making
             changes
           </Text>
-          </Paper>
-        </ExternalLink>
+        </Paper>
+        <Stepper
+          steps={["Step 1", "Step 2", "Step 3", "Step 4"]}
+          activeStep={2}
+          completedSteps={[0, 1]}
+        ></Stepper>
       </View>
     </View>
   );

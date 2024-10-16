@@ -1,6 +1,8 @@
 import Colors from "@/constants/Colors";
 import React from "react";
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Ionicons } from '@expo/vector-icons'; // Assuming you are using Expo, otherwise use react-native-vector-icons
+
 
 interface DialogProps {
   open: boolean;
@@ -8,6 +10,9 @@ interface DialogProps {
   title?: string;
   children?: React.ReactNode;
   actions?: React.ReactNode;
+  fullScreen?: boolean;
+  fullWidth?: boolean;
+  maxWidth?: "sm" | "md" | "lg";
 }
 
 const DialogTitle: React.FC<{ title?: string; children: React.ReactNode }> = ({
@@ -32,7 +37,23 @@ const Dialog: React.FC<DialogProps> = ({
   open,
   onClose,
   children,
+  fullScreen = false,
+  fullWidth = false,
+  maxWidth = "md",
 }) => {
+  const getMaxWidth = () => {
+    switch (maxWidth) {
+      case "sm":
+        return "60%";
+      case "md":
+        return "75%";
+      case "lg":
+        return "90%";
+      default:
+        return "75%";
+    }
+  };
+
   return (
     <Modal
       transparent={true}
@@ -41,11 +62,19 @@ const Dialog: React.FC<DialogProps> = ({
       onRequestClose={onClose}
     >
       <View style={styles.overlay}>
-        <View style={styles.dialog}>
-          {children}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>Close</Text>
+        <View
+          style={[
+            styles.dialog,
+            fullScreen && styles.fullScreenDialog,
+            fullWidth && styles.fullWidthDialog,
+            !fullScreen && !fullWidth && { width: getMaxWidth() },
+          ]}
+        >
+            <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
+            <Ionicons name="close" size={24} color={Colors.black} />
           </TouchableOpacity>
+          {children}
+          
         </View>
       </View>
     </Modal>
@@ -60,8 +89,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dialog: {
-    width: "85%",
-    backgroundColor:Colors.white,
+    backgroundColor: Colors.white,
     borderRadius: 8,
     padding: 20,
     shadowColor: Colors.black,
@@ -69,6 +97,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    position: "relative",
+  },
+  fullScreenDialog: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 0,
+    padding: 0,
+  },
+  fullWidthDialog: {
+    width: "100%",
   },
   title: {
     fontSize: 18,
@@ -89,6 +127,12 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: Colors.primary,
     fontSize: 16,
+  },
+  closeIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 1,
   },
 });
 

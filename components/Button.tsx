@@ -10,11 +10,12 @@ import {
 } from "react-native";
 
 type Variant = "contained" | "outlined" | "text";
+type Color = "primary" | "secondary" | "error" | "warning" | "info" | "success";
 
 interface ButtonProps {
   title: string;
   onPress: (event: GestureResponderEvent) => void;
-  color?: string;
+  color?: Color;
   backgroundColor?: string;
   variant?: Variant;
   disabled?: boolean;
@@ -28,29 +29,29 @@ interface ButtonTheme {
   text: TextStyle;
 }
 
-const buttonTheme: Record<Variant, ButtonTheme> = {
-  contained: {
-    button: { backgroundColor: Colors.primary },
-    text: { color: "#fff" },
-  },
-  outlined: {
+const buttonTheme: Record<Variant, (color: Color) => ButtonTheme> = {
+  contained: (color: Color) => ({
+    button: { backgroundColor: Colors[color] },
+    text: { color: Colors.white },
+  }),
+  outlined: (color: Color) => ({
     button: {
       backgroundColor: "transparent",
       borderWidth: 1,
-      borderColor: Colors.primary,
+      borderColor: Colors[color],
     },
-    text: { color: Colors.primary },
-  },
-  text: {
+    text: { color: Colors[color] },
+  }),
+  text: (color: Color) => ({
     button: { backgroundColor: "transparent" },
-    text: { color: Colors.primary },
-  },
+    text: { color: Colors[color] },
+  }),
 };
 
 const Button: React.FC<ButtonProps> = ({
   title,
   onPress,
-  color,
+  color = "primary",
   backgroundColor,
   variant = "contained",
   disabled = false,
@@ -58,7 +59,7 @@ const Button: React.FC<ButtonProps> = ({
   endIcon,
   fullWidth = false,
 }) => {
-  const { button: buttonStyle, text: textStyle } = buttonTheme[variant];
+  const { button: buttonStyle, text: textStyle } = buttonTheme[variant](color);
 
   return (
     <TouchableOpacity
@@ -73,9 +74,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {startIcon && <>{startIcon}</>}
-      <Text style={[styles.text, textStyle, color ? { color } : undefined]}>
-        {title}
-      </Text>
+      <Text style={[styles.text, textStyle]}>{title}</Text>
       {endIcon && <>{endIcon}</>}
     </TouchableOpacity>
   );
@@ -83,7 +82,9 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    minHeight: 48,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
