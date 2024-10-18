@@ -13,8 +13,8 @@ type Variant = "contained" | "outlined" | "text";
 type Color = "primary" | "secondary" | "error" | "warning" | "info" | "success";
 
 interface ButtonProps {
-  title: string;
-  onPress: (event: GestureResponderEvent) => void;
+  title?: string;
+  onPress?: (event: GestureResponderEvent) => void;
   color?: Color;
   backgroundColor?: string;
   variant?: Variant;
@@ -22,6 +22,7 @@ interface ButtonProps {
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   fullWidth?: boolean;
+  children?: React.ReactNode;
 }
 
 interface ButtonTheme {
@@ -58,6 +59,7 @@ const Button: React.FC<ButtonProps> = ({
   startIcon,
   endIcon,
   fullWidth = false,
+  children,
 }) => {
   const { button: buttonStyle, text: textStyle } = buttonTheme[variant](color);
 
@@ -74,7 +76,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {startIcon && <>{startIcon}</>}
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+      <Text style={[styles.text, textStyle]}>{title??children}</Text>
       {endIcon && <>{endIcon}</>}
     </TouchableOpacity>
   );

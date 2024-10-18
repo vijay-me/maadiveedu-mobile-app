@@ -1,3 +1,4 @@
+import Colors from "@/constants/Colors";
 import React from "react";
 import { Text, StyleSheet, TextStyle } from "react-native";
 
@@ -18,47 +19,53 @@ interface TypographyProps {
     | "overline";
   style?: TextStyle;
   children: React.ReactNode;
+  color?: string;
 }
 
 const Typography: React.FC<TypographyProps> = ({
   variant = "body1",
   style,
+  color = Colors.black,
   children,
 }) => {
-  return <Text style={[styles[variant], style]}>{children}</Text>;
+  return (
+    <Text style={[styles[variant], { width: "100%", color }, style]}>
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
   h1: {
-    fontSize: 32,
-    fontWeight: "bold",
-  },
-  h2: {
     fontSize: 28,
     fontWeight: "bold",
   },
-  h3: {
+  h2: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  h4: {
+  h3: {
     fontSize: 20,
     fontWeight: "bold",
   },
-  h5: {
+  h4: {
     fontSize: 18,
     fontWeight: "bold",
   },
-  h6: {
+  h5: {
     fontSize: 16,
     fontWeight: "bold",
   },
+  h6: {
+    fontSize: 14,
+    fontWeight: "bold",
+  },
   subtitle1: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
   },
   subtitle2: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "600",
   },
   body1: {
@@ -69,15 +76,15 @@ const styles = StyleSheet.create({
   },
   caption: {
     fontSize: 12,
-    color: "#6e6e6e",
+    color: Colors["text-70"],
   },
   button: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
     textTransform: "uppercase",
   },
   overline: {
-    fontSize: 10,
+    fontSize: 8,
     fontWeight: "bold",
     textTransform: "uppercase",
   },

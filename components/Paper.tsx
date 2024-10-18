@@ -1,17 +1,42 @@
 import Colors from "@/constants/Colors";
+import { spacing } from "@/constants/spacing";
 import React from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle, Pressable, TouchableOpacity } from "react-native";
 
 interface PaperProps {
   elevation?: number;
   style?: ViewStyle;
   children: React.ReactNode;
+  onPress?: () => void;
 }
 
-const Paper: React.FC<PaperProps> = ({ elevation = 1, style, children }) => {
+// const Paper: React.FC<PaperProps> = ({ elevation = 1, style, children }) => {
+//   const elevationStyle = getElevationStyle(elevation);
+const Paper: React.FC<PaperProps> = ({
+  elevation = 1,
+  style,
+  children,
+  onPress,
+}) => {
   const elevationStyle = getElevationStyle(elevation);
 
-  return <View style={[styles.paper, elevationStyle, style]}>{children}</View>;
+  const content = (
+    <View style={[styles.paper, elevationStyle, style]}>{children}</View>
+  );
+
+  if (onPress) {
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        // style={[styles.paper, elevationStyle, style]}
+        style={{width: "100%"}}
+      >
+        {content}
+      </TouchableOpacity>
+    );
+  }
+
+  return content;
 };
 
 const getElevationStyle = (elevation: number): ViewStyle => {
@@ -28,7 +53,8 @@ const styles = StyleSheet.create({
   paper: {
     backgroundColor: Colors.white,
     borderRadius: 4,
-    padding: 10,
+    padding: spacing.medium,
+    width: "100%",
   },
 });
 
