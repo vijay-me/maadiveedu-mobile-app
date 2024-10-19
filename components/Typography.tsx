@@ -2,34 +2,45 @@ import Colors from "@/constants/Colors";
 import React from "react";
 import { Text, StyleSheet, TextStyle } from "react-native";
 
+type TextVariant =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "subtitle1"
+  | "subtitle2"
+  | "body1"
+  | "body2"
+  | "caption"
+  | "button"
+  | "overline"
+  |"primary-title";
+
 interface TypographyProps {
-  variant?:
-    | "h1"
-    | "h2"
-    | "h3"
-    | "h4"
-    | "h5"
-    | "h6"
-    | "subtitle1"
-    | "subtitle2"
-    | "body1"
-    | "body2"
-    | "caption"
-    | "button"
-    | "overline";
+  variant?: TextVariant;
   style?: TextStyle;
   children: React.ReactNode;
   color?: string;
+  align?: "left" | "center" | "right" | "justify";
 }
 
 const Typography: React.FC<TypographyProps> = ({
   variant = "body1",
   style,
+  align = "left",
   color = Colors.black,
   children,
 }) => {
   return (
-    <Text style={[styles[variant], { width: "100%", color }, style]}>
+    <Text
+      style={[
+        styles[variant],
+        { width: "100%", color, textAlign: align },
+        style,
+      ]}
+    >
       {children}
     </Text>
   );
@@ -87,6 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: "bold",
     textTransform: "uppercase",
+  },
+  "primary-title": {
+    fontSize: 20,
+    fontWeight: "600",
+    color: Colors.primary,
   },
 });
 

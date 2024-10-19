@@ -6,8 +6,17 @@ import Colors from "@/constants/Colors";
 import { spacing } from "@/constants/spacing";
 import { Link } from "expo-router";
 import React from "react";
+import { translate } from "../i18n";
+import { useTranslation } from "react-i18next";
 
 function _layout() {
+
+  console.log(translate('welcome.title'));
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <Stack
       style={{
@@ -18,8 +27,8 @@ function _layout() {
       }}
     >
       <Stack>
-        <Typography variant="subtitle1" children="Welcome toto to" />
-        <Typography variant="h3" children={"MaadiVeedu !"} />
+        <Typography variant="subtitle1">Welcome to</Typography>
+        <Typography variant="h3">MaadiVeedu !</Typography> 
       </Stack>
       <Stack
         style={{
@@ -28,31 +37,31 @@ function _layout() {
         }}
         spacing={1}
       >
-        <Typography variant="body1">What are you looking for ?</Typography>
+        {/* <Typography variant="body1">What are you looking for ?</Typography> */}
+        <Typography variant="body1"> {translate('welcome.title')} What are you looking for ?</Typography>
 
         <Stack spacing={2} style={{}}>
           {[
             {
-              title: "Property Searchhh",
+              title: "Property Search",
               caption: "Buy, Rent, PG & Commercial",
             },
             { title: "Post Property ", caption: "Sell or rent out your home" },
           ].map(({ title, caption }) => (
-            <Link href="/login" asChild>
-            <Paper
-            key='key'
-              style={{
-                paddingHorizontal: spacing.medium,
-                paddingVertical: spacing.large,
-                borderWidth: 1,
-                borderColor: Colors.disabled,
-                borderRadius: spacing.extraSmall,
-              }}
-              //   onPress={() => path="app/(tabs)/index.tsx"}
-            >
-              <Typography >{title}</Typography>
-              <Typography >{caption}</Typography>
-            </Paper>
+            <Link key={title} href="/login" asChild>
+              <Paper
+                style={{
+                  paddingHorizontal: spacing.medium,
+                  paddingVertical: spacing.large,
+                  borderWidth: 1,
+                  borderColor: Colors.disabled,
+                  borderRadius: spacing.extraSmall,
+                }}
+                //   onPress={() => path="app/(tabs)/index.tsx"}
+              >
+                <Typography>{title}</Typography>
+                <Typography>{caption}</Typography>
+              </Paper>
             </Link>
           ))}
         </Stack>

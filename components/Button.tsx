@@ -76,7 +76,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {startIcon && <>{startIcon}</>}
-      <Text style={[styles.text, textStyle]}>{title??children}</Text>
+      <Text style={[styles.text, textStyle]}>{children??title}</Text>
       {endIcon && <>{endIcon}</>}
     </TouchableOpacity>
   );

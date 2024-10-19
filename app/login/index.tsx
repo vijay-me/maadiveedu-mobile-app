@@ -8,41 +8,21 @@ import { spacing } from "@/constants/spacing";
 import React, { useEffect, useRef, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 
-function LoginScreen() {
-  const stackRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (stackRef.current) {
-      console.log(stackRef);
-      setHeight(stackRef.current.clientHeight);
-    }
-  }, []);
-
+function SignUpOrLoginScreen() {
   return (
     <ScreenDefault>
-      <Stack
-        justifyContent="flex-end"
-        // alignItems="flex-end"
-        // alignContent="flex-end"
-        style={{ flex: 1 }}
-      >
+      <Stack justifyContent="flex-end" style={{ flex: 1 }}>
         <Stack spacing={3}>
           <Stack spacing={1}>
-            <Typography
-              color={Colors.primary}
-              style={{ fontSize: 20, fontWeight: "600" }}
-            >
-              Sign up to continue
-            </Typography>
+            <Typography variant="primary-title">Sign up to continue</Typography>
             <Stack>
-            <Typography variant="caption" >
-              Enter the mobile number where you can be reached.
-            </Typography>
-            <Typography variant="caption">
-              No one else will see this on your profile
-            </Typography>
-            </Stack>            
+              <Typography variant="caption">
+                Enter the mobile number where you can be reached.
+              </Typography>
+              <Typography variant="caption">
+                No one else will see this on your profile
+              </Typography>
+            </Stack>
           </Stack>
           {[
             {
@@ -58,7 +38,7 @@ function LoginScreen() {
               type: "password",
             },
           ].map((input, index) => (
-            <TextField key={index} fullWidth {...input} />
+            <TextField key={input?.name} fullWidth {...input} />
           ))}
 
           <Button
@@ -72,6 +52,7 @@ function LoginScreen() {
           </Button>
           <Typography
             variant="caption"
+            align="center"
             style={{ textAlign: "center", marginTop: spacing.extraLarge }}
           >
             By sign in or sign up, you agree to our Terms of Service and Privacy
@@ -83,4 +64,4 @@ function LoginScreen() {
   );
 }
 
-export default LoginScreen;
+export default SignUpOrLoginScreen;
